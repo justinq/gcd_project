@@ -83,3 +83,14 @@ names(d) <- gsub('\\.+', '.', names(d))
 names(d) <- gsub('\\.$', '', names(d))
 
 #names(d)
+
+#
+# 5. From the data set in step 4, create a second, independent tidy data set
+#    with the average of each variable for each activity and each subject.
+#
+d.summary <- d %>% group_by(subject, activity) %>% summarise_each(funs(mean))
+
+# go back to the original working directory and write the tidy data file
+setwd(oldwd)
+write.table(d.summary, file="dataset.csv", row.name=FALSE)
+
