@@ -54,4 +54,32 @@ d <- mutate(d, subject=factor(subject), activity=factor(activity))
 #
 d <- select(d, subject, activity, matches("mean|std", ignore.case=TRUE))
 
+#
+# 3. Use descriptive activity names to name the activities in the data set
+#
+# read the list of all activity labels
+activity.labels <- fread('activity_labels.txt')
+levels(d$activity) <- activity.labels$V2
 
+#
+# 4. Appropriately label the data set with descriptive variable names.
+#
+names(d)
+
+# remove redundant 'Body'
+names(d) <- gsub('BodyBody', 'Body', names(d))
+# expand some names
+names(d) <- gsub('Acc', '.accelerometer', names(d))
+names(d) <- gsub('Gyro', '.gyroscope', names(d))
+names(d) <- gsub('Freq', '.frequency', names(d))
+names(d) <- gsub('Mean', '.mean', names(d))
+names(d) <- gsub('Mag', '.magnitude', names(d))
+names(d) <- gsub('tBody', 'time.body.', names(d))
+names(d) <- gsub('fBody', 'frequency.body.', names(d))
+names(d) <- gsub('tGravity', 'time.gravity', names(d))
+names(d) <- gsub('Jerk', '.jerk.', names(d))
+# remove duplicate and trailing '.'
+names(d) <- gsub('\\.+', '.', names(d))
+names(d) <- gsub('\\.$', '', names(d))
+
+#names(d)
