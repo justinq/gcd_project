@@ -47,3 +47,11 @@ d <- do.call("rbind", lapply(c("test", "train"), read_dataset))
 d <- tbl_df(d)
 # change the subject and activity to factors
 d <- mutate(d, subject=factor(subject), activity=factor(activity))
+
+#
+# 2. Extract only the measurements on the mean and standard deviation
+#    for each measurement.
+#
+d <- select(d, subject, activity, matches("mean|std", ignore.case=TRUE))
+
+
